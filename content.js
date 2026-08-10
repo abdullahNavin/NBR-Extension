@@ -19,10 +19,30 @@
       sources: ['livingExpenditure', 'otherLivingExpenditure'],
       target: 'totalLivingExpenditure',
       label: 'totalLivingExpenditure'
+    },
+    {
+      sources: ['totalIncome', 'taxExemptedIncome', 'giftOrOthersIncome'],
+      target: 'totalFund',
+      label: 'totalFund'
+    },
+    {
+      sources: [
+        'institutionalLiabilitiesAmt',
+        'nonInstitutionalLiabilitiesAmt',
+        'otherLiabilitiesAmt'
+      ],
+      target: 'totalPersonalLiabilitiesAmt',
+      label: 'totalPersonalLiabilitiesAmt'
+    },
+    {
+      sources: ['netWealthThisFinancialYear', 'totalPersonalLiabilitiesAmt'],
+      target: 'grossWealth',
+      label: 'grossWealth'
     }
   ];
 
   const bound = new WeakSet();
+  const cascading = new Set();
 
   function queryInput(name) {
     return document.querySelector(
@@ -49,7 +69,7 @@
     return hasDecimals ? String(val) : String(Math.round(val));
   }
 
-  function handleBlur(rule) {
+  function calculateRule(rule) {
     const sources = rule.sources
       .map(queryInput)
       .filter(Boolean);
@@ -57,13 +77,40 @@
     const sum = sources.reduce((acc, el) => acc + parseAmount(el.value), 0);
 
     const target = queryInput(rule.target);
-    if (!target) return;
+    if (!target) return false;
 
     const text = formatValue(sum);
-    if (target.value === text) return;
+    if (target.value === text) return false;
 
     setAngularValue(target, text);
     console.log(`Auto-filled ${rule.label}: ${text}`);
+    return true;
+  }
+
+  function cascadeDependents(targetName) {
+    rules.forEach((rule) => {
+      if (rule.sources.includes(targetName) && !cascading.has(rule)) {
+        cascading.add(rule);
+        try {
+          if (calculateRule(rule)) {
+            cascadeDependents(rule.target);
+          }
+        } finally {
+          cascading.delete(rule);
+        }
+      }
+    });
+  }
+
+  function handleBlur(rule) {
+    cascading.add(rule);
+    try {
+      if (calculateRule(rule)) {
+        cascadeDependents(rule.target);
+      }
+    } finally {
+      cascading.delete(rule);
+    }
   }
 
   function attachBlur(rule) {
