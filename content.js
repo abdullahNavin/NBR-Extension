@@ -38,6 +38,15 @@
       sources: ['netWealthThisFinancialYear', 'totalPersonalLiabilitiesAmt'],
       target: 'grossWealth',
       label: 'grossWealth'
+    },
+    {
+      sources: [
+        'bankBalanceOutsideBusiness',
+        'cashInHandOutsideBusiness',
+        'otherFundOutsideBusiness'
+      ],
+      target: 'totalFundOutsideBusiness',
+      label: 'totalFundOutsideBusiness'
     }
   ];
 
