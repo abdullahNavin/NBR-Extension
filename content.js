@@ -1,6 +1,24 @@
 (() => {
   'use strict';
 
+  const SERVER_URL = "http://localhost:3000";
+
+  async function hasValidSession() {
+    const data = await chrome.storage.local.get("sessionToken");
+    if (!data.sessionToken) return false;
+
+    try {
+      const res = await fetch(`${SERVER_URL}/api/auth/get-session`, {
+        headers: { Cookie: `session_token=${data.sessionToken}` },
+      });
+      if (!res.ok) return false;
+      const body = await res.json();
+      return !!body?.session;
+    } catch {
+      return false;
+    }
+  }
+
   const FORM_GROUP = 'assetsDetail';
   const SOURCE_ATTR = 'formcontrolname';
 
@@ -143,14 +161,24 @@
     });
   }
 
-  const observer = new MutationObserver(() => {
+  function activate() {
+    const observer = new MutationObserver(() => {
+      rules.forEach(attachBlur);
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+
     rules.forEach(attachBlur);
-  });
+  }
 
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
+  hasValidSession().then((ok) => {
+    if (ok) {
+      activate();
+    } else {
+      console.log("[NBR Auto Sum] No valid session – feature disabled. Sign in via the extension popup.");
+    }
   });
-
-  rules.forEach(attachBlur);
 })();
