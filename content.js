@@ -47,6 +47,18 @@
       ],
       target: 'totalFundOutsideBusiness',
       label: 'totalFundOutsideBusiness'
+    },
+    {
+      sources: [
+        'shareBondEtc',
+        'sanchaypatra',
+        'loanGiven',
+        'savingsDeposit',
+        'providentOtherFund',
+        'otherInvestment'
+      ],
+      target: 'totalFinancialAssets',
+      label: 'totalFinancialAssets'
     }
   ];
 
