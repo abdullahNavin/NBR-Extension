@@ -8,7 +8,7 @@ const router = Router();
 router.use(requireSession);
 
 // ── POST /payment/submit ────────────────────────────────────────────────
-router.post("/payment/submit", async (req: Request, res: Response) => {
+router.post("/submit", async (req: Request, res: Response) => {
   try {
     const { method, senderNumber, transactionId, amount } = req.body;
 

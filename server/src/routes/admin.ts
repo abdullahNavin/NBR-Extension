@@ -34,7 +34,7 @@ router.use(requireSession, requireAdmin);
 
 // ── POST /admin/payment/:paymentId/approve ──────────────────────────────
 router.post(
-  "/admin/payment/:paymentId/approve",
+  "/payment/:paymentId/approve",
   async (req: Request, res: Response) => {
     try {
       const paymentId = String(req.params.paymentId);
@@ -79,7 +79,7 @@ router.post(
 
 // ── POST /admin/payment/:paymentId/reject ───────────────────────────────
 router.post(
-  "/admin/payment/:paymentId/reject",
+  "/payment/:paymentId/reject",
   async (req: Request, res: Response) => {
     try {
       const paymentId = String(req.params.paymentId);

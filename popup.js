@@ -114,5 +114,12 @@ logoutBtn.addEventListener("click", signOut);
 nbrBtn.addEventListener("click", () => {
   chrome.tabs.create({ url: "https://office.etaxnbr.gov.bd" });
 });
+buyLicense.addEventListener("click", async (e) => {
+  e.preventDefault();
+  const { sessionToken } = await chrome.storage.local.get("sessionToken");
+  if (sessionToken) {
+    chrome.tabs.create({ url: `http://localhost:3000/purchase?token=${sessionToken}` });
+  }
+});
 
 checkSession();

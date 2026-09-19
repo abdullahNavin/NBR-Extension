@@ -8,7 +8,7 @@ const router = Router();
 router.use(requireSession);
 
 // ── GET /license/status ─────────────────────────────────────────────────
-router.get("/license/status", async (req: Request, res: Response) => {
+router.get("/status", async (req: Request, res: Response) => {
   try {
     const license = await prisma.license.findUnique({
       where: { userId: req.userId! },
@@ -28,7 +28,7 @@ router.get("/license/status", async (req: Request, res: Response) => {
 });
 
 // ── POST /license/log-fill ──────────────────────────────────────────────
-router.post("/license/log-fill", async (req: Request, res: Response) => {
+router.post("/log-fill", async (req: Request, res: Response) => {
   try {
     const { psrId } = req.body;
 

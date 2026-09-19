@@ -5,7 +5,7 @@ import crypto from "node:crypto";
 
 const router = Router();
 
-router.post("/auth/google", async (req: Request, res: Response) => {
+router.post("/google", async (req: Request, res: Response) => {
   try {
     const { accessToken } = req.body;
 
