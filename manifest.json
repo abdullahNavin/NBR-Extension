@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "NBR Auto Sum",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Automatically sums Fund+Net Wealth and Living Expenditure on the NBR e-Tax portal (office.etaxnbr.gov.bd).",
   "permissions": [
     "tabs",
@@ -14,12 +14,15 @@
     "http://localhost:3000/*"
   ],
   "oauth2": {
-    "client_id": "184547006638-g3dr02f9jig3vvtjvhqnh1oib6dslktn.apps.googleusercontent.com",
+    "client_id": "184547006638-qtm8a719vdqe31b21mqc8mqmmjn8b8pk.apps.googleusercontent.com",
     "scopes": [
       "openid",
       "email",
       "profile"
     ]
+  },
+  "background": {
+    "service_worker": "background.js"
   },
   "content_scripts": [
     {

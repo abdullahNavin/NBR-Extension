@@ -2,23 +2,19 @@
   "$schema": "https://opencode.ai/config.json",
   "mcp": {
     "better-auth": {
+      "type": "remote",
+      "url": "https://mcp.better-auth.com/mcp",
+      "enabled": true
+    },
+    "prisma": {
       "type": "local",
       "command": [
         "npx",
         "-y",
-        "auth@latest",
+        "prisma",
         "mcp"
-      ]
+      ],
+      "enabled": true
     }
-  },
-  "prisma": {
-    "type": "local",
-    "command": [
-      "npx",
-      "-y",
-      "prisma",
-      "mcp"
-    ],
-    "enabled": true
   }
 }
