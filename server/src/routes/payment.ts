@@ -1,5 +1,5 @@
 import { Router, type Request, type Response } from "express";
-import { Prisma } from "@prisma/client";
+import { Prisma, PaymentMethod } from "@prisma/client";
 import { prisma } from "../prisma.js";
 import { requireSession } from "../middleware/auth.js";
 
@@ -14,8 +14,8 @@ router.post("/submit", async (req: Request, res: Response) => {
 
     // ── Validate inputs ──
     const errors: string[] = [];
-    if (!method || !["bkash", "nagad"].includes(method)) {
-      errors.push("method must be 'bkash' or 'nagad'");
+    if (!method || !Object.values(PaymentMethod).includes(method)) {
+      errors.push(`method must be one of: ${Object.values(PaymentMethod).join(", ")}`);
     }
     if (!senderNumber || typeof senderNumber !== "string") {
       errors.push("senderNumber is required");

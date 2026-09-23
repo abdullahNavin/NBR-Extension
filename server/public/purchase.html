@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NBR Auto Sum — Purchase License</title>
+  <title>NBR Auto Sum &mdash; Purchase License</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       background: #f5f5f7;
@@ -16,33 +22,53 @@
       justify-content: center;
       padding: 24px;
     }
+
     .container {
       width: 100%;
       max-width: 420px;
     }
+
     .card {
       background: #fff;
       border-radius: 12px;
       padding: 28px 24px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
     }
+
     .header {
       text-align: center;
       margin-bottom: 24px;
     }
+
     .header img {
       width: 48px;
       height: 48px;
       margin-bottom: 10px;
     }
+
     .header h1 {
       font-size: 18px;
       font-weight: 700;
       margin-bottom: 4px;
     }
+
     .header p {
       font-size: 13px;
       color: #666;
+    }
+
+    .price-badge {
+      display: inline-flex;
+      align-items: center;
+      background: #EEF2FF;
+      color: #3730A3;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+      width: 100%;
+      justify-content: center;
     }
 
     .payment-details {
@@ -51,21 +77,25 @@
       padding: 14px;
       margin-bottom: 20px;
     }
+
     .payment-details h3 {
       font-size: 12px;
       font-weight: 600;
       color: #555;
       margin-bottom: 10px;
     }
+
     .account-row {
       display: flex;
       align-items: center;
       gap: 10px;
       padding: 8px 0;
     }
-    .account-row + .account-row {
+
+    .account-row+.account-row {
       border-top: 1px solid #e8e8e8;
     }
+
     .account-icon {
       width: 32px;
       height: 32px;
@@ -76,26 +106,59 @@
       flex-shrink: 0;
       overflow: hidden;
     }
+
     .account-icon img {
       width: 100%;
       height: 100%;
       object-fit: contain;
     }
-    .account-info { min-width: 0; }
+
+    .account-info {
+      min-width: 0;
+    }
+
     .account-label {
       font-size: 11px;
       color: #888;
       line-height: 1.3;
     }
+
     .account-number {
       font-size: 14px;
       font-weight: 600;
       letter-spacing: 0.5px;
     }
 
+    .copy-btn {
+      margin-left: auto;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 500;
+      font-family: inherit;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: #fff;
+      color: #555;
+      cursor: pointer;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+
+    .copy-btn:hover {
+      background: #f5f5f5;
+      border-color: #bbb;
+    }
+
+    .copy-btn.copied {
+      background: #D1FAE5;
+      border-color: #34D399;
+      color: #065F46;
+    }
+
     .form-group {
       margin-bottom: 14px;
     }
+
     .form-group label {
       display: block;
       font-size: 12px;
@@ -103,6 +166,7 @@
       color: #555;
       margin-bottom: 5px;
     }
+
     .form-group input,
     .form-group select {
       width: 100%;
@@ -114,34 +178,60 @@
       transition: border-color 0.15s;
       background: #fff;
     }
+
     .form-group input:focus,
     .form-group select:focus {
       outline: none;
       border-color: #999;
     }
+
     .form-group input.error {
       border-color: #ef4444;
     }
+
     .field-error {
       font-size: 11px;
       color: #ef4444;
       margin-top: 4px;
       display: none;
     }
+
     .field-error.visible {
       display: block;
+    }
+
+    .amount-wrapper {
+      position: relative;
+    }
+
+    .currency-prefix {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 13px;
+      font-weight: 500;
+      color: #999;
+      pointer-events: none;
+    }
+
+    .amount-wrapper input {
+      padding-left: 28px !important;
     }
 
     .radio-group {
       display: flex;
       gap: 8px;
     }
+
     .radio-option {
       flex: 1;
     }
+
     .radio-option input {
       display: none;
     }
+
     .radio-option label {
       display: flex;
       align-items: center;
@@ -156,10 +246,22 @@
       transition: all 0.15s;
       margin-bottom: 0;
     }
-    .radio-option input:checked + label {
+
+    .radio-option input:checked+label {
       border-color: #1a1a1a;
       background: #f9f9f9;
     }
+
+    #methodBkash:checked+label {
+      border-color: #E2136E;
+      background: #FDF2F8;
+    }
+
+    #methodNagad:checked+label {
+      border-color: #F6921E;
+      background: #FFF7ED;
+    }
+
     .radio-dot {
       width: 8px;
       height: 8px;
@@ -167,9 +269,20 @@
       border: 2px solid #ccc;
       transition: border-color 0.15s;
     }
-    .radio-option input:checked + label .radio-dot {
+
+    .radio-option input:checked+label .radio-dot {
       border-color: #1a1a1a;
       background: #1a1a1a;
+    }
+
+    #methodBkash:checked+label .radio-dot {
+      border-color: #E2136E;
+      background: #E2136E;
+    }
+
+    #methodNagad:checked+label .radio-dot {
+      border-color: #F6921E;
+      background: #F6921E;
     }
 
     .submit-btn {
@@ -186,56 +299,139 @@
       font-family: inherit;
       margin-top: 6px;
     }
-    .submit-btn:hover { background: #333; }
+
+    .submit-btn:hover {
+      background: #333;
+    }
+
     .submit-btn:disabled {
       opacity: 0.5;
       cursor: not-allowed;
     }
 
-    .alert {
-      padding: 12px 14px;
-      border-radius: 8px;
-      font-size: 12px;
-      line-height: 1.5;
-      margin-top: 16px;
-      display: none;
-    }
-    .alert.visible { display: block; }
-    .alert-success { background: #D1FAE5; color: #065F46; }
-    .alert-error { background: #FEE2E2; color: #991B1B; }
-
     .token-error {
       text-align: center;
       padding: 40px 24px;
     }
+
     .token-error h2 {
       font-size: 16px;
       font-weight: 600;
       margin-bottom: 8px;
     }
+
     .token-error p {
       font-size: 13px;
       color: #666;
       line-height: 1.5;
     }
 
-    .hidden { display: none; }
+    .hidden {
+      display: none;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .modal-overlay.visible {
+      display: flex;
+    }
+
+    .modal-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 32px 28px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+      animation: modalIn 0.3s ease;
+    }
+
+    @keyframes modalIn {
+      from {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .modal-checkmark {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #D1FAE5;
+      color: #059669;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+
+    .modal-checkmark svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .modal-card h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .modal-card p {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .modal-close-btn {
+      padding: 9px 24px;
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s;
+    }
+
+    .modal-close-btn:hover {
+      background: #333;
+    }
   </style>
 </head>
+
 <body>
   <div class="container">
-    <!-- Shown when token is missing/invalid -->
     <div id="tokenError" class="card token-error hidden">
       <h2>Session required</h2>
       <p>Please open this page from the extension's <strong>Buy License</strong> button.</p>
     </div>
 
-    <!-- Shown when token is valid -->
     <div id="purchaseForm" class="card hidden">
       <div class="header">
         <img src="/nbr_logo.png" alt="NBR Auto Sum">
         <h1>Purchase License</h1>
         <p>Send payment, then submit your details below.</p>
+      </div>
+
+      <div style="text-align:center">
+        <div class="price-badge">License price: ৳200 (one-time payment)</div>
       </div>
 
       <div class="payment-details">
@@ -244,15 +440,17 @@
           <div class="account-icon"><img src="/bkash.png" alt="bKash"></div>
           <div class="account-info">
             <div class="account-label">bKash Personal</div>
-            <div class="account-number">01XXXXXXXXX</div>
+            <div class="account-number">01715175021</div>
           </div>
+          <button type="button" class="copy-btn" data-copy="01715175021">Copy</button>
         </div>
         <div class="account-row">
           <div class="account-icon"><img src="/nagad.png" alt="Nagad"></div>
           <div class="account-info">
             <div class="account-label">Nagad Personal</div>
-            <div class="account-number">01XXXXXXXXX</div>
+            <div class="account-number">01715175021</div>
           </div>
+          <button type="button" class="copy-btn" data-copy="01715175021">Copy</button>
         </div>
       </div>
 
@@ -274,38 +472,51 @@
         <div class="form-group">
           <label for="senderNumber">Sender number</label>
           <input type="tel" id="senderNumber" placeholder="e.g. 01712345678" autocomplete="off">
-          <div id="senderNumberError" class="field-error">Enter the number you paid from</div>
+          <div id="senderNumberError" class="field-error">Enter a valid 11-digit number</div>
         </div>
 
         <div class="form-group">
           <label for="transactionId">Transaction ID</label>
           <input type="text" id="transactionId" placeholder="e.g. 9A1B2C3D4E5F" autocomplete="off">
-          <div id="transactionIdError" class="field-error">Enter the transaction ID</div>
+          <div id="transactionIdError" class="field-error">Transaction ID is required</div>
         </div>
 
         <div class="form-group">
           <label for="amount">Amount (BDT)</label>
-          <input type="number" id="amount" min="1" step="1" placeholder="e.g. 500">
+          <div class="amount-wrapper">
+            <span class="currency-prefix">৳</span>
+            <input type="number" id="amount" min="1" step="1" value="200">
+          </div>
           <div id="amountError" class="field-error">Enter a valid amount</div>
         </div>
 
-        <button type="submit" id="submitBtn" class="submit-btn">Submit Payment</button>
+        <button type="submit" id="submitBtn" class="submit-btn" disabled>Submit Payment</button>
       </form>
+    </div>
+  </div>
 
-      <div id="alertSuccess" class="alert alert-success">
-        <strong>Submitted!</strong> Your payment is pending verification. You'll be upgraded once we confirm it.
+  <div id="successModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-checkmark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+          stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
       </div>
-      <div id="alertError" class="alert alert-error"></div>
+      <h2>Payment Submitted</h2>
+      <p>We've received your payment details. Your license will be activated within a few hours after verification.
+        You'll be notified once it's active.</p>
+      <button type="button" id="modalCloseBtn" class="modal-close-btn">Got it</button>
     </div>
   </div>
 
   <script>
     (function () {
-      const params = new URLSearchParams(window.location.search);
-      const token = params.get("token");
+      var params = new URLSearchParams(window.location.search);
+      var token = params.get("token");
 
-      const tokenErrorEl = document.getElementById("tokenError");
-      const purchaseFormEl = document.getElementById("purchaseForm");
+      var tokenErrorEl = document.getElementById("tokenError");
+      var purchaseFormEl = document.getElementById("purchaseForm");
 
       if (!token) {
         tokenErrorEl.classList.remove("hidden");
@@ -314,13 +525,27 @@
 
       purchaseFormEl.classList.remove("hidden");
 
-      const form = document.getElementById("form");
-      const submitBtn = document.getElementById("submitBtn");
-      const senderNumber = document.getElementById("senderNumber");
-      const transactionId = document.getElementById("transactionId");
-      const amount = document.getElementById("amount");
-      const alertSuccess = document.getElementById("alertSuccess");
-      const alertError = document.getElementById("alertError");
+      var form = document.getElementById("form");
+      var submitBtn = document.getElementById("submitBtn");
+      var senderNumber = document.getElementById("senderNumber");
+      var transactionId = document.getElementById("transactionId");
+      var amount = document.getElementById("amount");
+      var successModal = document.getElementById("successModal");
+      var modalCloseBtn = document.getElementById("modalCloseBtn");
+
+      document.querySelectorAll(".copy-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var text = btn.getAttribute("data-copy");
+          navigator.clipboard.writeText(text).then(function () {
+            btn.textContent = "Copied!";
+            btn.classList.add("copied");
+            setTimeout(function () {
+              btn.textContent = "Copy";
+              btn.classList.remove("copied");
+            }, 1500);
+          });
+        });
+      });
 
       function clearErrors() {
         document.querySelectorAll(".field-error").forEach(function (el) {
@@ -329,8 +554,6 @@
         document.querySelectorAll("input.error").forEach(function (el) {
           el.classList.remove("error");
         });
-        alertSuccess.classList.remove("visible");
-        alertError.classList.remove("visible");
       }
 
       function showFieldError(inputEl, errorEl) {
@@ -338,25 +561,67 @@
         errorEl.classList.add("visible");
       }
 
+      function validateSenderNumber() {
+        var val = senderNumber.value.trim();
+        var errorEl = document.getElementById("senderNumberError");
+        if (!/^\d{11}$/.test(val)) {
+          showFieldError(senderNumber, errorEl);
+          return false;
+        }
+        senderNumber.classList.remove("error");
+        errorEl.classList.remove("visible");
+        return true;
+      }
+
+      function validateTransactionId() {
+        var val = transactionId.value.trim();
+        var errorEl = document.getElementById("transactionIdError");
+        if (!val) {
+          showFieldError(transactionId, errorEl);
+          return false;
+        }
+        transactionId.classList.remove("error");
+        errorEl.classList.remove("visible");
+        return true;
+      }
+
+      function validateAmount() {
+        var val = parseInt(amount.value, 10);
+        var errorEl = document.getElementById("amountError");
+        if (!val || val <= 0) {
+          showFieldError(amount, errorEl);
+          return false;
+        }
+        amount.classList.remove("error");
+        errorEl.classList.remove("visible");
+        return true;
+      }
+
+      function validateForm() {
+        var radio = document.querySelector('input[name="method"]:checked');
+        var valid = validateSenderNumber() && validateTransactionId() && validateAmount() && !!radio;
+        submitBtn.disabled = !valid;
+        return valid;
+      }
+
+      senderNumber.addEventListener("blur", validateSenderNumber);
+      transactionId.addEventListener("blur", validateTransactionId);
+      amount.addEventListener("blur", validateAmount);
+
+      senderNumber.addEventListener("input", validateForm);
+      transactionId.addEventListener("input", validateForm);
+      amount.addEventListener("input", validateForm);
+      document.querySelectorAll('input[name="method"]').forEach(function (el) {
+        el.addEventListener("change", validateForm);
+      });
+
+      validateForm();
+
       form.addEventListener("submit", async function (e) {
         e.preventDefault();
         clearErrors();
 
-        var valid = true;
-        if (!senderNumber.value.trim()) {
-          showFieldError(senderNumber, document.getElementById("senderNumberError"));
-          valid = false;
-        }
-        if (!transactionId.value.trim()) {
-          showFieldError(transactionId, document.getElementById("transactionIdError"));
-          valid = false;
-        }
-        var amountVal = parseInt(amount.value, 10);
-        if (!amountVal || amountVal <= 0) {
-          showFieldError(amount, document.getElementById("amountError"));
-          valid = false;
-        }
-        if (!valid) return;
+        if (!validateForm()) return;
 
         submitBtn.disabled = true;
         submitBtn.textContent = "Submitting...";
@@ -373,28 +638,42 @@
               method: method,
               senderNumber: senderNumber.value.trim(),
               transactionId: transactionId.value.trim(),
-              amount: amountVal,
+              amount: parseInt(amount.value, 10),
             }),
           });
 
           var data = await res.json();
 
           if (res.ok) {
-            alertSuccess.classList.add("visible");
+            successModal.classList.add("visible");
             form.reset();
+            amount.value = "200";
+          } else if (res.status === 409) {
+            showFieldError(transactionId, document.getElementById("transactionIdError"));
+            document.getElementById("transactionIdError").textContent = data.error || "Transaction ID is required";
           } else {
-            alertError.textContent = data.error || "Something went wrong. Please try again.";
-            alertError.classList.add("visible");
+            var errorEl = document.getElementById("transactionIdError");
+            errorEl.textContent = data.error || "Something went wrong. Please try again.";
+            showFieldError(transactionId, errorEl);
           }
         } catch (err) {
-          alertError.textContent = "Network error. Please check your connection and try again.";
-          alertError.classList.add("visible");
+          var errorEl = document.getElementById("transactionIdError");
+          errorEl.textContent = "Network error. Please check your connection and try again.";
+          showFieldError(transactionId, errorEl);
         } finally {
-          submitBtn.disabled = false;
           submitBtn.textContent = "Submit Payment";
+          validateForm();
         }
+      });
+
+      modalCloseBtn.addEventListener("click", function () {
+        successModal.classList.remove("visible");
+        form.reset();
+        amount.value = "200";
+        validateForm();
       });
     })();
   </script>
 </body>
+
 </html>

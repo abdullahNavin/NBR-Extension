@@ -7,9 +7,6 @@ datasource db {
 }
 
 // ─── BetterAuth core tables ─────────────────────────────────────────────────
-// These are required by BetterAuth. Column names must match exactly.
-// The "user" table is extended via additionalFields in auth.ts (not here)
-// so that BetterAuth's adapter and CLI stay in sync.
 
 model user {
   id            String    @id @default(cuid())
@@ -26,34 +23,37 @@ model user {
 }
 
 model session {
-  id           String   @id @default(cuid())
-  expiresAt   DateTime
-  token       String   @unique
-  ipAddress   String?
-  userAgent   String?
-  userId      String
-  user        user     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String   @unique
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }
 
 model account {
-  id            String   @id @default(cuid())
-  accountId     String
-  providerId    String
-  userId        String
-  user          user     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  accessToken   String?
-  refreshToken  String?
-  idToken       String?
-  accessTokenExpiresAt DateTime?
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  user      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
   refreshTokenExpiresAt DateTime?
-  scope         String?
-  password      String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
 
   @@unique([providerId, accountId])
+  @@index([userId])
 }
 
 model verification {
@@ -63,30 +63,59 @@ model verification {
   expiresAt  DateTime
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
 }
 
 // ─── Application models ─────────────────────────────────────────────────────
 
+enum LicenseStatus {
+  trial
+  active
+  expired
+  revoked
+}
+
+enum PaymentMethod {
+  bkash
+  nagad
+}
+
+enum PaymentStatus {
+  pending
+  verified
+  rejected
+}
+
 model License {
-  id          String    @id @default(cuid())
-  userId      String    @unique
-  user        user      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  status      String    @default("trial")
-  filesLimit  Int       @default(10)
-  filesUsed   Int       @default(0)
-  usedPsrIds  String[]  @default([])
+  id          String        @id @default(cuid())
+  userId      String        @unique
+  user        user          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status      LicenseStatus @default(trial)
+  filesLimit  Int           @default(10)
+  filesUsed   Int           @default(0)
+  usedPsrIds  String[]      @default([])
   activatedAt DateTime?
-  createdAt   DateTime  @default(now())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([status])
 }
 
 model Payment {
-  id            String   @id @default(cuid())
+  id            String        @id @default(cuid())
   userId        String
-  user          user     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  method        String
+  user          user          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  method        PaymentMethod
   senderNumber  String
-  transactionId String   @unique
+  transactionId String        @unique
   amount        Int
-  status        String   @default("pending")
-  createdAt     DateTime @default(now())
+  status        PaymentStatus @default(pending)
+  adminNote     String?
+  reviewedAt    DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([userId])
+  @@index([status])
 }
